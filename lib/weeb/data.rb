@@ -25,9 +25,10 @@ module WeebSh
     # @return [String] the URL being used for weeb.sh.
     attr_reader :api_url
 
-    # @param token [String] the token required to use weeb.sh.
+    # @param auth [String] the authentication required to use weeb.sh.
     # @param user_agent [String, Hash] the user agent to use on endpoints.
     # @param api_url [String] the URL to use when using the weeb.sh API.
+    # @param client [Client] the client this is tied to.
     def initialize(auth, user_agent = nil, api_url: 'https://api.weeb.sh', client: nil)
       @user_agent = WeebSh::API.format_user_agent(user_agent)
       @auth = auth
@@ -40,6 +41,7 @@ module WeebSh
       puts "[#{self.class.name}] Your User Agent is not ideal. Please consider adding a user agent to help identify issues easier." if !user_agent.nil? && user_agent.split('/').count < 2
     end
 
+    # @!visibility private
     def inspect
       "#<#{self.class.name} @api_url=#{@api_url.inspect} @user_agent=#{@user_agent.inspect}>"
     end
@@ -67,6 +69,7 @@ module WeebSh
       @url = data['url']
     end
 
+    # @!visibility private
     def inspect
       "#<WeebSh::PreviewImage @url=#{@url.inspect} @type=#{@type.inspect}>"
     end
@@ -131,7 +134,7 @@ module WeebSh
     end
 
     # Remove a tag to the image
-    # @param tags [String, Tag] the affected tag
+    # @param tag [String, Tag] the affected tag
     def remove_tag(tag)
       @interface.remove_tags_to_image(self, [tag])
     end
@@ -142,6 +145,7 @@ module WeebSh
     end
     alias_method :remove, :delete
 
+    # @!visibility private
     def inspect
       "#<WeebSh::WeebImage @url=#{@url.inspect} @type=#{@type.inspect} @nsfw=#{@nsfw.inspect}>"
     end
@@ -169,6 +173,7 @@ module WeebSh
       @account = data['account']
     end
 
+    # @!visibility private
     def inspect
       "#<WeebSh::Tag @name=#{@name.inspect} @hidden=#{@hidden.inspect} @account=#{@account.inspect}>"
     end

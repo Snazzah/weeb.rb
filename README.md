@@ -6,7 +6,7 @@
 ![Gem Downloads](https://img.shields.io/gem/dt/weeb.svg)
 ![Travis](https://img.shields.io/travis/Snazzah/weeb.rb/master.svg)
 [![Inline docs](http://inch-ci.org/github/Snazzah/weeb.rb.svg?branch=master&style=shields)](http://inch-ci.org/github/Snazzah/weeb.rb)
-[![Docs](https://img.shields.io/badge/view-docs-FACE00.svg)](http://www.rubydoc.info/gems/weeb)
+[![Docs](https://img.shields.io/badge/view-docs-FACE00.svg)](https://www.rubydoc.info/github/Snazzah/weeb.rb/master)
 
 A wrapper gem for the [weeb.sh](https://weeb.sh) API.
 

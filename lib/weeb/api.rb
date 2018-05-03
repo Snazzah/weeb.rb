@@ -9,6 +9,7 @@ module WeebSh
   module API
     module_function
 
+    # Request an endpoint easily
     def request(type, *attributes)
       parse_json(RestClient.send(type, *attributes))
     rescue RestClient::RequestEntityTooLarge
@@ -39,12 +40,14 @@ module WeebSh
       raise e
     end
 
+    # @!visibility private
     def format_user_agent(user_agent)
       user_agent = "#{user_agent['botname']}/#{user_agent['version']}#{"/#{user_agent['env']}" if user_agent['env']}" if user_agent.is_a?(Hash)
       return nil unless user_agent.is_a?(String) && !user_agent.empty?
       user_agent
     end
 
+    # @!visibility private
     def parse_json(raw)
       JSON.parse(raw)
     rescue JSON::ParserError

@@ -35,8 +35,9 @@ module WeebSh
     alias_method :settings, :tama
 
     # Groups all interfaces into one.
-    # @param token [String] the token required to use weeb.sh.
+    # @param auth [String] the authentication required to use weeb.sh.
     # @param user_agent [String, Hash] the user agent to use with requests.
+    # @param api_url [String] the URL to use when using the weeb.sh API.
     def initialize(auth, user_agent = nil, api_url: 'https://api.weeb.sh')
       @user_agent = WeebSh::API.format_user_agent(user_agent)
       @auth = auth
