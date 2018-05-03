@@ -1,0 +1,1 @@
+require 'weeb/interfaces/client'

@@ -1,0 +1,56 @@
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Naming/ConstantName:
+  Enabled: false
+
+Lint/RescueException:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: 2.3
+
+Style/Alias:
+  Enabled: false
+
+Layout/EndOfLine:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MultilineTernaryOperator:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Layout/IndentHash:
+  EnforcedStyle: consistent
