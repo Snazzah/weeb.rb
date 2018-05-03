@@ -1,8 +1,10 @@
 <div align=center>
   <h1>Weeb.rb</h1>
 </div>
-[![Gem Version](https://img.shields.io/gem/v/weeb.svg)]()
-[![Gem Downloads](https://img.shields.io/gem/dt/weeb.svg)]() [![Travis](https://img.shields.io/travis/Snazzah/weeb.rb/master.svg)]()
+
+![Gem Version](https://img.shields.io/gem/v/weeb.svg)
+![Gem Downloads](https://img.shields.io/gem/dt/weeb.svg)
+![Travis](https://img.shields.io/travis/Snazzah/weeb.rb/master.svg)
 [![Inline docs](http://inch-ci.org/github/Snazzah/weeb.rb.svg?branch=master&style=shields)](http://inch-ci.org/github/Snazzah/weeb.rb)
 [![Docs](https://img.shields.io/badge/view-docs-FACE00.svg)](http://www.rubydoc.info/gems/weeb)
 
