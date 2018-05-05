@@ -191,7 +191,7 @@ module WeebSh
     # @return [String] the ID of the bot that issues reputation
     attr_reader :bot_id
 
-    # @return [String] the ID of the account from their token
+    # @return [String] the ID of the account from the token
     attr_reader :account
 
     # @return [Array<Time>] the last time(s) this user has given reputation to another user
@@ -246,6 +246,9 @@ module WeebSh
     attr_reader :reputation_cooldown
     alias_method :rep_cooldown, :reputation_cooldown
 
+    # @return [String, nil] the ID of the account from the token
+    attr_reader :account
+
     # @!visibility private
     def initialize(data, interface)
       @interface = interface
@@ -253,6 +256,7 @@ module WeebSh
       @max_reputation = data['maximumReputation']
       @max_reputation_per_day = data['maximumReputationReceivedDay']
       @reputation_cooldown = data['reputationCooldown']
+      @account = data['account']
     end
 
     # @!visibility private
