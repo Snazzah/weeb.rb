@@ -24,7 +24,7 @@ module WeebSh
 
     # Gets the currentyly used settings
     # @return [ReputationSettings] the user requested
-    def get_settings
+    def settings
       new ReputationSettings(response['settings'], self)
     end
   end
@@ -43,7 +43,7 @@ module WeebSh
     # @Param user [User, String, #resolve_id] the user to get
     # @return [User] the user requested
     def get(user)
-      @interface(@id, user)
+      @interface.get(@id, user)
     end
   end
 end
