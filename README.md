@@ -35,7 +35,10 @@ client.toph.random(type: 'discord_memes') # #<WeebSh::WeebImage @url="https://cd
 
 # Contributing
 
-Please run rubocop while testing. That's all I ask. *(and common sense)*
+You should always run these two things in terminal *(and use common sense!)*:
+
+    rubocop
+    inch suggest
 
 # License
 

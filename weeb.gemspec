@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'bundler', '~> 1.10'
   gem.add_development_dependency 'rubocop', '0.49.1'
+  gem.add_development_dependency 'inch', '0.8.0'
 
   gem.add_dependency 'rest-client'
 end
