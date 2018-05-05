@@ -120,7 +120,7 @@ module WeebSh
     # @param hidden [true, false] if true, you can only get back hidden tags you added
     # @param nsfw [true, false, String] whether or not preview images could be NSFW. Setting this to "only" restricts it to NSFW images.
     # @param file_type [String] the file type an image is required to be for selection
-    # @param page [Number] the page number of images to use
+    # @param page [Integer] the page number of images to use
     # @param account [String] the account ID to get images from
     # @return [WeebImage] Returns image that was randomly selected.
     def list(type: nil, tags: [], hidden: false, nsfw: false, file_type: nil, page: 0, account: nil)

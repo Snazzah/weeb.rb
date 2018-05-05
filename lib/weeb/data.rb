@@ -1,4 +1,5 @@
 require 'weeb/api'
+require 'time'
 
 module WeebSh
   # Mixin for objects with IDs
@@ -176,6 +177,87 @@ module WeebSh
     # @!visibility private
     def inspect
       "#<WeebSh::Tag @name=#{@name.inspect} @hidden=#{@hidden.inspect} @account=#{@account.inspect}>"
+    end
+  end
+
+  # Represents a user for shimakaze
+  class User
+    include IDObject
+
+    # @return [Integer] the reputation of the user
+    attr_reader :reputation
+    alias_method :rep, :reputation
+
+    # @return [String] the ID of the bot that issues reputation
+    attr_reader :bot_id
+
+    # @return [String] the ID of the account from their token
+    attr_reader :account
+
+    # @return [Array<Time>] the last time(s) this user has given reputation to another user
+    attr_reader :cooldown
+    alias_method :taken_reputation, :cooldown
+
+    # @return [Array<Time>] the last time(s) this user has received reputation from another user
+    attr_reader :given_reputation
+
+    # @return [Integer, nil] the amount to times the user may give reputation
+    attr_reader :available_reputation
+
+    # @return [Array<Time>, nil] the timestamps referring to the remaining cooldown time until the user can give out reputation from now
+    attr_reader :next_available_reputation
+
+    # @!visibility private
+    def initialize(data, interface)
+      @interface = interface
+      @reputation = data['reputation']
+      @id = data['userId']
+      @bot_id = data['botId']
+      @account = data['account']
+      @cooldown = data['cooldown'].map { |t| Time.parse(t) }
+      @given_reputation = data['givenReputation'].map { |t| Time.parse(t) }
+      @available_reputation = data['availableReputation']
+      @next_available_reputation = data['nextAvailableReputation'] ? data['nextAvailableReputation'].map { |t| Time.parse(t) } : nil
+    end
+
+    # @!visibility private
+    def inspect
+      "#<WeebSh::User @reputation=#{@reputation.inspect} @id=#{@id.inspect} @bot_id=#{@bot_id.inspect}>"
+    end
+  end
+
+  # Represents a reputation settings object for shimakaze
+  class ReputationSettings
+    include IDObject
+
+    # @return [Integer] the number of reputations a user may give out per cooldown
+    attr_reader :reputation_per_day
+    alias_method :rep_per_day, :reputation_per_day
+
+    # @return [Integer] the maximum reputation a user may receive
+    attr_reader :max_reputation
+    alias_method :max_rep, :max_reputation
+
+    # @return [Integer] the maximum reputation a user may receive per day
+    attr_reader :max_reputation_per_day
+    alias_method :max_rep_per_day, :max_reputation_per_day
+
+    # @return [Integer] the cooldown per reputation, this is set to time in seconds
+    attr_reader :reputation_cooldown
+    alias_method :rep_cooldown, :reputation_cooldown
+
+    # @!visibility private
+    def initialize(data, interface)
+      @interface = interface
+      @reputation_per_day = data['reputationPerDay']
+      @max_reputation = data['maximumReputation']
+      @max_reputation_per_day = data['maximumReputationReceivedDay']
+      @reputation_cooldown = data['reputationCooldown']
+    end
+
+    # @!visibility private
+    def inspect
+      "#<WeebSh::ReputationSettings @reputation_per_day=#{@reputation_per_day.inspect} @max_reputation=#{@max_reputation.inspect} @max_reputation_per_day=#{@max_reputation_per_day.inspect} @reputation_cooldown=#{@reputation_cooldown.inspect}>"
     end
   end
 end
