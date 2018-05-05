@@ -139,5 +139,5 @@ module WeebSh
   end
 
   # Alias for the class {Toph}
-  Image = Toph
+  Images = Toph
 end

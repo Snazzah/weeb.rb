@@ -25,7 +25,7 @@ client = WeebSh::Client.new('Wolke #######', 'weeb/1.0.0/example')
 # You can also set the API url by setting 'api_url'
 
 # Using WeebSh::Client ties all interfaces together, but you can also use them seperately:
-standalone_interface = WeebSh::Toph('Wolke #######', 'weeb/1.0.0/toph_example')
+standalone_interface = WeebSh::Toph.new('Wolke #######', 'weeb/1.0.0/toph_example')
 ```
 Toph
 ```ruby
