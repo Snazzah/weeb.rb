@@ -210,14 +210,69 @@ module WeebSh
     # @!visibility private
     def initialize(data, interface)
       @interface = interface
+      patch(data)
+      @available_reputation = data['availableReputation']
+      @next_available_reputation = data['nextAvailableReputation'] ? data['nextAvailableReputation'].map { |t| Time.parse(t) } : nil
+    end
+
+    # Increases the user's reputation
+    # @param amount [Integer] the amount of reputation that will increase
+    # @return [User] the class itself
+    def increase(amount)
+      response = WeebSh::API::Shimakaze.increase(@interface, @bot_id, @id, amount)
+      patch(response['user'])
+      self
+    end
+
+    # Decreases the user's reputation
+    # @param amount [Integer] the amount of reputation that will decrease
+    # @return [User] the class itself
+    def decrease(amount)
+      response = WeebSh::API::Shimakaze.decrease(@interface, @bot_id, @id, amount)
+      patch(response['user'])
+      self
+    end
+
+    # Resets the user
+    # @return [User] the class itself
+    def reset
+      response = WeebSh::API::Shimakaze.reset(@interface, @bot_id, @id)
+      patch(response['user'])
+      self
+    end
+
+    # Gives reputation to another user
+    # @Param user [User, String, #resolve_id] the user to give reputation to
+    # @return [User] the class itself
+    def give(user)
+      user_id = user.resolve_id if user.respond_to?(:resolve_id)
+      response = API::Shimakaze.give(@interface, @bot_id, @id, user_id || user)
+      patch(response['sourceUser'])
+      user.patch(response['targetUser']) if user.is_a?(User)
+      self
+    end
+
+    # Recieves reputation to another user
+    # @Param user [User, String, #resolve_id] the user to get reputation from
+    # @return [User] the class itself
+    def recieve(user)
+      user_id = user.resolve_id if user.respond_to?(:resolve_id)
+      response = API::Shimakaze.give(@interface, @bot_id, user_id || user, @id)
+      patch(response['targetUser'])
+      user.patch(response['sourceUser']) if user.is_a?(User)
+      self
+    end
+
+    # @!visibility private
+    def patch(data)
       @reputation = data['reputation']
       @id = data['userId']
       @bot_id = data['botId']
       @account = data['account']
       @cooldown = data['cooldown'].map { |t| Time.parse(t) }
       @given_reputation = data['givenReputation'].map { |t| Time.parse(t) }
-      @available_reputation = data['availableReputation']
-      @next_available_reputation = data['nextAvailableReputation'] ? data['nextAvailableReputation'].map { |t| Time.parse(t) } : nil
+      @available_reputation = data['availableReputation'] if data['availableReputation'].nil?
+      @next_available_reputation = data['nextAvailableReputation'].map { |t| Time.parse(t) } if data['nextAvailableReputation'].nil?
     end
 
     # @!visibility private
@@ -231,23 +286,23 @@ module WeebSh
     include IDObject
 
     # @return [Integer] the number of reputations a user may give out per cooldown
-    attr_reader :reputation_per_day
+    attr_accessor :reputation_per_day
     alias_method :rep_per_day, :reputation_per_day
 
     # @return [Integer] the maximum reputation a user may receive
-    attr_reader :max_reputation
+    attr_accessor :max_reputation
     alias_method :max_rep, :max_reputation
 
     # @return [Integer] the maximum reputation a user may receive per day
-    attr_reader :max_reputation_per_day
+    attr_accessor :max_reputation_per_day
     alias_method :max_rep_per_day, :max_reputation_per_day
 
     # @return [Integer] the cooldown per reputation, this is set to time in seconds
-    attr_reader :reputation_cooldown
+    attr_accessor :reputation_cooldown
     alias_method :rep_cooldown, :reputation_cooldown
 
     # @return [String, nil] the ID of the account from the token
-    attr_reader :account
+    attr_accessor :account
 
     # @!visibility private
     def initialize(data, interface)
@@ -257,6 +312,18 @@ module WeebSh
       @max_reputation_per_day = data['maximumReputationReceivedDay']
       @reputation_cooldown = data['reputationCooldown']
       @account = data['account']
+    end
+
+    # Save the settings on this object
+    # @return [ReputationSettings] the class itself
+    def save
+      WeebSh::API::Shimakaze.set_settings(@interface, {
+        reputationPerDay: @reputation_per_day,
+        maximumReputation: @max_reputation,
+        maximumReputationReceivedDay: @max_reputation_per_day,
+        reputationCooldown: @reputation_cooldown
+      })
+      self
     end
 
     # @!visibility private

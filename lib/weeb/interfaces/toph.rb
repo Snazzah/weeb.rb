@@ -99,7 +99,7 @@ module WeebSh
     # @param tags [Array<String, Tag>] the affected tags
     # @return [WeebImage] Returns the image with the given ID.
     def add_tags_to_image(image, tags)
-      image = image.resolve_id if id.respond_to?(:resolve_id)
+      image = image.resolve_id if image.respond_to?(:resolve_id)
       tags = tags.map { |t| t.name if t.is_a(Tag) }
       WeebImage.new(API::Toph.add_tags_to_image(self, image, tags), self)
     end
@@ -109,7 +109,7 @@ module WeebSh
     # @param tags [Array<String, Tag>] the affected tags
     # @return [WeebImage] Returns the image with the given ID.
     def remove_tags_to_image(image, tags)
-      image = image.resolve_id if id.respond_to?(:resolve_id)
+      image = image.resolve_id if image.respond_to?(:resolve_id)
       tags = tags.map { |t| t.name if t.is_a(Tag) }
       WeebImage.new(API::Toph.remove_tags_to_image(self, image, tags), self)
     end
